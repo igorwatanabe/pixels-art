@@ -148,8 +148,6 @@ section2.appendChild(addButton2);
     localStorage.setItem('pixelBoard', quadroPintado.innerHTML);
   }
 
-
-
   function recuperandoQuadro(){
     
     if (localStorage.getItem('pixelBoard')) {
@@ -168,6 +166,7 @@ section2.appendChild(addButton2);
   addInput.id = 'board-size';
   addInput.type = 'number';
   addInput.min =  '1';
+  //addInput.max =  '50';
   addSection2.appendChild(addInput);
   const addBtnInput = document.createElement('button');
   addBtnInput.innerHTML = 'VQV';
@@ -176,34 +175,75 @@ section2.appendChild(addButton2);
 
   function quadroNovo(){
     const valueInput = document.querySelector('#board-size').value;
+    const apagandoPixels = document.getElementById('pixel-board');
     //console.log(valueInput);
     //pegar o valor do input e colocar no for para substituir o pixel board.
     //const mae = document.querySelector('#pixel-board');
     if (valueInput <= 0) {
       return alert('Board inválido!');
-    } else {
-      const apagandoPixels = document.getElementById('pixel-board');
+    } else if (valueInput > 0 && valueInput < 5) {
+        let valueInput = 5;
+        apagandoPixels.innerHTML = '';
+        apagandoPixels.style.setProperty('grid-template-columns', `repeat(${valueInput}, 1fr`);
+        for (let index2 = 0; index2 < valueInput ** 2; index2 += 1) {
+          const pixels = document.createElement('div');
+          pixels.classList.add('pixel');
+          section3.appendChild(pixels);
+        } 
+    } else if (valueInput > 50) {
+      let valueInput = 50;
       apagandoPixels.innerHTML = '';
       apagandoPixels.style.setProperty('grid-template-columns', `repeat(${valueInput}, 1fr`);
       console.log(apagandoPixels.style.setProperty);
-      
       for (let index2 = 0; index2 < valueInput ** 2; index2 += 1) {
         const pixels = document.createElement('div');
         pixels.classList.add('pixel');
         section3.appendChild(pixels);
-}
+      }
+     } else {
+        apagandoPixels.innerHTML = '';
+      apagandoPixels.style.setProperty('grid-template-columns', `repeat(${valueInput}, 1fr`);
+      console.log(apagandoPixels.style.setProperty);
+      for (let index2 = 0; index2 < valueInput ** 2; index2 += 1) {
+        const pixels = document.createElement('div');
+        pixels.classList.add('pixel');
+        section3.appendChild(pixels);
 
-
-    }
-
+      }
+      }
   }
 
-  const btnVQV = document.querySelector('#generate-board');
-  btnVQV.addEventListener('click', (quadroNovo));
+  // Crie uma função para manter o tamanho novo do board ao recarregar a página.
+  function salvandoTamanhoQuadro(){
+    const valueInput = document.querySelector('#board-size').value;
+    const quadroTamanho = document.querySelector('#pixel-board');
+    const size = quadroTamanho.style.gridTemplateColumns;
+    console.log(size);
+    localStorage.setItem('boardSize', JSON.stringify(quadroTamanho.innerHTML));
+    localStorage.setItem('size', JSON.stringify(size) );
+  }
+
+  function recuperandoTamanhoQuadro(){
+    
+    if (localStorage.getItem('boardSize')) {
+    const propAntigo = JSON.parse(localStorage.getItem('size'));
+    const tamanhoAntigo = JSON.parse(localStorage.getItem('boardSize'));
+    const quadro = document.querySelector('#pixel-board');
+    quadro.innerHTML = tamanhoAntigo;
+    quadro.style.setProperty('grid-template-columns', `${propAntigo}`);
+    console.log(propAntigo);
+    }
+  }
+  
 
   
 window.onload = () => {
   const btnCores = document.querySelector('#pixel-board');
   btnCores.addEventListener('click', (salvandoCoresPintadas));
-  recuperandoQuadro()
+  recuperandoQuadro();
+  const btnVQV = document.querySelector('#generate-board');
+  btnVQV.addEventListener('click', (quadroNovo));
+  const btnTamanhoQuadro = document.querySelector('#generate-board');
+  btnTamanhoQuadro.addEventListener('click', (salvandoTamanhoQuadro));
+  recuperandoTamanhoQuadro();
 };
