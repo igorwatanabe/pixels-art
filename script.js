@@ -52,6 +52,23 @@ for (let index2 = 0; index2 <= 24; index2 += 1) {
   section3.appendChild(pixels);
 }
 
+//const addSection3 = document.createElement('section');
+//addSection3.id = 'pixel-board';
+//corpo.appendChild(addSection3);
+//const section3 = document.getElementById('pixel-board');
+//for (let index2 = 0; index2 < 5; index2 += 1) {
+//  const pixels = document.createElement('div');
+//  pixels.className = 'pixel';
+//  section3.appendChild(pixels);
+//  for (let index3 = 0; index3 < 5; index3 += 1 ){
+//    const pixelsColuna = document.
+//    pixels.className = 'pixel';
+//    pixels.appendChild(pixels);
+//  }
+//}
+
+
+
 // color black com classe selected
 divBlack.classList.add('selected');
 
@@ -131,16 +148,16 @@ section2.appendChild(addButton2);
     localStorage.setItem('pixelBoard', quadroPintado.innerHTML);
   }
 
-  const btnCores = document.querySelector('#pixel-board');
-  btnCores.addEventListener('click', (salvandoCoresPintadas));
+
 
   function recuperandoQuadro(){
-    if (localStorage.getItem('pixelBoard') === true) {
+    
+    if (localStorage.getItem('pixelBoard')) {
     const quadroLocal = localStorage.getItem('pixelBoard');
     const quadro = document.querySelector('#pixel-board');
     quadro.innerHTML = quadroLocal;
-    console.log(quadro);
-    };
+    console.log(quadroLocal);
+    }
   }
   
 
@@ -150,7 +167,7 @@ section2.appendChild(addButton2);
   const addInput = document.createElement('input');
   addInput.id = 'board-size';
   addInput.type = 'number';
-  addInput.min = '0';
+  addInput.min =  '1';
   addSection2.appendChild(addInput);
   const addBtnInput = document.createElement('button');
   addBtnInput.innerHTML = 'VQV';
@@ -158,10 +175,35 @@ section2.appendChild(addButton2);
   addSection2.appendChild(addBtnInput);
 
   function quadroNovo(){
+    const valueInput = document.querySelector('#board-size').value;
+    //console.log(valueInput);
+    //pegar o valor do input e colocar no for para substituir o pixel board.
+    //const mae = document.querySelector('#pixel-board');
+    if (valueInput <= 0) {
+      return alert('Board inválido!');
+    } else {
+      const apagandoPixels = document.getElementById('pixel-board');
+      apagandoPixels.innerHTML = '';
+      apagandoPixels.style.setProperty('grid-template-columns', `repeat(${valueInput}, 1fr`);
+      console.log(apagandoPixels.style.setProperty);
+      
+      for (let index2 = 0; index2 < valueInput ** 2; index2 += 1) {
+        const pixels = document.createElement('div');
+        pixels.classList.add('pixel');
+        section3.appendChild(pixels);
+}
+
+
+    }
 
   }
 
+  const btnVQV = document.querySelector('#generate-board');
+  btnVQV.addEventListener('click', (quadroNovo));
+
   
 window.onload = () => {
+  const btnCores = document.querySelector('#pixel-board');
+  btnCores.addEventListener('click', (salvandoCoresPintadas));
   recuperandoQuadro()
 };
