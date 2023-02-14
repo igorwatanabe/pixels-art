@@ -126,7 +126,7 @@ function salvandoCoresPintadas() {
   localStorage.setItem('pixelBoard', quadroPintado.innerHTML);
 }
 
-function recuperandoQuadro(){
+function recuperandoQuadro() {
   if (localStorage.getItem('pixelBoard')) {
     const quadroLocal = localStorage.getItem('pixelBoard');
     const quadro = document.querySelector('#pixel-board');
@@ -152,7 +152,7 @@ function quadroNovo() {
   if (valueInput <= 0) {
     return alert('Board inválido!');
   } else if (valueInput > 0 && valueInput < 5) {
-    let valueInput = 5;
+    const valueInput = 5;
     apagandoPixels.innerHTML = '';
     apagandoPixels.style.setProperty('grid-template-columns', `repeat(${valueInput}, 1fr`);
     for (let index2 = 0; index2 < valueInput ** 2; index2 += 1) {
@@ -161,7 +161,7 @@ function quadroNovo() {
       section3.appendChild(pixels);
     }
   } else if (valueInput > 50) {
-    let valueInput = 50;
+    const valueInput = 50;
     apagandoPixels.innerHTML = '';
     apagandoPixels.style.setProperty('grid-template-columns', `repeat(${valueInput}, 1fr`);
     console.log(apagandoPixels.style.setProperty);
