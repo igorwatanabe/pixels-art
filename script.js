@@ -52,23 +52,6 @@ for (let index2 = 0; index2 <= 24; index2 += 1) {
   section3.appendChild(pixels);
 }
 
-//const addSection3 = document.createElement('section');
-//addSection3.id = 'pixel-board';
-//corpo.appendChild(addSection3);
-//const section3 = document.getElementById('pixel-board');
-//for (let index2 = 0; index2 < 5; index2 += 1) {
-//  const pixels = document.createElement('div');
-//  pixels.className = 'pixel';
-//  section3.appendChild(pixels);
-//  for (let index3 = 0; index3 < 5; index3 += 1 ){
-//    const pixelsColuna = document.
-//    pixels.className = 'pixel';
-//    pixels.appendChild(pixels);
-//  }
-//}
-
-
-
 // color black com classe selected
 divBlack.classList.add('selected');
 
@@ -78,165 +61,146 @@ const addButton2 = document.createElement('button');
 addButton2.id = 'clear-board';
 addButton2.innerHTML = 'Limpar';
 section2.appendChild(addButton2);
-
-
-
-  const btnRandom = document.getElementById('button-random-color');
-  btnRandom.addEventListener('click', () => {
-    const color = document.getElementsByClassName('color');                  
-    for (let index = 1; index < color.length; index += 1) {
-      const colorR = parseInt(Math.random() * 255);
-      const colorG = parseInt(Math.random() * 255);
-      const colorB = parseInt(Math.random() * 255);
-      color[index].style.backgroundColor = `rgb(${colorR}, ${colorG}, ${colorB})`;
-    }
-  
-    // Implemente uma função usando localStorage para que a paleta de cores gerada aleatoriamente seja mantida após recarregar a página.
-    const salvandoCores = () => {
-      const colorPalette = {
-        0: divRed.style.backgroundColor,
-        1: divGreen.style.backgroundColor,
-        2: divBlue.style.backgroundColor,
-      };
-      localStorage.setItem('colorPalette', JSON.stringify(colorPalette));
+const btnRandom = document.getElementById('button-random-color');
+btnRandom.addEventListener('click', () => {
+  const color = document.getElementsByClassName('color');
+  for (let index = 1; index < color.length; index += 1) {
+    const colorR = parseInt(Math.random() * 255);
+    const colorG = parseInt(Math.random() * 255);
+    const colorB = parseInt(Math.random() * 255);
+    color[index].style.backgroundColor = `rgb(${colorR}, ${colorG}, ${colorB})`;
+  }
+  // Implemente uma função usando localStorage para que a paleta de cores gerada aleatoriamente seja mantida após recarregar a página.
+  const salvandoCores = () => {
+    const colorPalette = {
+      0: divRed.style.backgroundColor,
+      1: divGreen.style.backgroundColor,
+      2: divBlue.style.backgroundColor,
     };
-    salvandoCores();
-  });
-
-  const recuperandoCores = JSON.parse(localStorage.getItem('colorPalette')) || [];
-  const classeColor = document.getElementsByClassName('color');
-  for (let index = 1; index < classeColor.length; index += 1) {
-    classeColor[index].style.backgroundColor = recuperandoCores[index - 1];
-  }
-    
-  // Crie uma função para selecionar uma cor na paleta de cores.    
-  const colorSelected = document.querySelectorAll('.color');
-  for (cores of colorSelected) {
-    cores.addEventListener('click', (event) => {
-      const selected = document.querySelector('.selected');
-      if (selected) {
-        selected.classList.remove('selected');
-      }
-      event.target.classList.add('selected');
-    });
-  }
-  // Crie uma função que permita preencher um pixel do quadro com a cor selecionada na paleta de cores.
-  const pixel = document.querySelectorAll('.pixel');
-  for (let index = 0; index < pixel.length; index += 1) {
-    pixel[index].addEventListener('click', (event) => {
-      const selected = document.querySelector('.selected').style.backgroundColor;
-      event.target.style.backgroundColor = selected;
-    });
-  }
-
-  // Crie um botão que retorne a cor do quadro para a cor inicial.
-  const btnReset = document.getElementById('clear-board');
-  const pixelBoard = document.querySelectorAll('.pixel');
-  const reset = () => {
-    for (let index = 0; index < pixelBoard.length; index += 1) {
-      pixelBoard[index].style.backgroundColor = 'rgb(255, 255, 255)';
-    }
-    localStorage.clear('pixelBoard');
+    localStorage.setItem('colorPalette', JSON.stringify(colorPalette));
   };
-  btnReset.addEventListener('click', (reset));
+  salvandoCores();
+});
 
-  // Crie uma função para salvar e recuperar o seu desenho atual no localStorage
-  
-  function salvandoCoresPintadas(){
-    const quadroPintado = document.querySelector('#pixel-board');
-    //console.log(quadroPintado.innerHTML);
-    localStorage.setItem('pixelBoard', quadroPintado.innerHTML);
+const recuperandoCores = JSON.parse(localStorage.getItem('colorPalette')) || [];
+const classeColor = document.getElementsByClassName('color');
+for (let index = 1; index < classeColor.length; index += 1) {
+  classeColor[index].style.backgroundColor = recuperandoCores[index - 1];
+}
+
+// Crie uma função para selecionar uma cor na paleta de cores.
+const colorSelected = document.querySelectorAll('.color');
+for (cores of colorSelected) {
+  cores.addEventListener('click', (event) => {
+    const selected = document.querySelector('.selected');
+    if (selected) {
+      selected.classList.remove('selected');
+    }
+    event.target.classList.add('selected');
+  });
+}
+
+// Crie uma função que permita preencher um pixel do quadro com a cor selecionada na paleta de cores.
+const pixel = document.querySelectorAll('.pixel');
+for (let index = 0; index < pixel.length; index += 1) {
+  pixel[index].addEventListener('click', (event) => {
+    const selected = document.querySelector('.selected').style.backgroundColor;
+    event.target.style.backgroundColor = selected;
+  });
+}
+
+// Crie um botão que retorne a cor do quadro para a cor inicial.
+const btnReset = document.getElementById('clear-board');
+const pixelBoard = document.querySelectorAll('.pixel');
+const reset = () => {
+  for (let index = 0; index < pixelBoard.length; index += 1) {
+    pixelBoard[index].style.backgroundColor = 'rgb(255, 255, 255)';
   }
+  localStorage.clear('pixelBoard');
+};
+btnReset.addEventListener('click', (reset));
 
-  function recuperandoQuadro(){
-    
-    if (localStorage.getItem('pixelBoard')) {
+// Crie uma função para salvar e recuperar o seu desenho atual no localStorage
+function salvandoCoresPintadas() {
+  const quadroPintado = document.querySelector('#pixel-board');
+  localStorage.setItem('pixelBoard', quadroPintado.innerHTML);
+}
+
+function recuperandoQuadro(){
+  if (localStorage.getItem('pixelBoard')) {
     const quadroLocal = localStorage.getItem('pixelBoard');
     const quadro = document.querySelector('#pixel-board');
     quadro.innerHTML = quadroLocal;
     console.log(quadroLocal);
+  }
+}
+
+// Crie um input que permita à pessoa usuária preencher um novo tamanho para o quadro de pixels.
+const addInput = document.createElement('input');
+addInput.id = 'board-size';
+addInput.type = 'number';
+addInput.min = '1';
+addSection2.appendChild(addInput);
+const addBtnInput = document.createElement('button');
+addBtnInput.innerHTML = 'VQV';
+addBtnInput.id = 'generate-board';
+addSection2.appendChild(addBtnInput);
+
+function quadroNovo() {
+  const valueInput = document.querySelector('#board-size').value;
+  const apagandoPixels = document.getElementById('pixel-board');
+  if (valueInput <= 0) {
+    return alert('Board inválido!');
+  } else if (valueInput > 0 && valueInput < 5) {
+    let valueInput = 5;
+    apagandoPixels.innerHTML = '';
+    apagandoPixels.style.setProperty('grid-template-columns', `repeat(${valueInput}, 1fr`);
+    for (let index2 = 0; index2 < valueInput ** 2; index2 += 1) {
+      const pixels = document.createElement('div');
+      pixels.classList.add('pixel');
+      section3.appendChild(pixels);
+    }
+  } else if (valueInput > 50) {
+    let valueInput = 50;
+    apagandoPixels.innerHTML = '';
+    apagandoPixels.style.setProperty('grid-template-columns', `repeat(${valueInput}, 1fr`);
+    console.log(apagandoPixels.style.setProperty);
+    for (let index2 = 0; index2 < valueInput ** 2; index2 += 1) {
+      const pixels = document.createElement('div');
+      pixels.classList.add('pixel');
+      section3.appendChild(pixels);
+    }
+  } else {
+    apagandoPixels.innerHTML = '';
+    apagandoPixels.style.setProperty('grid-template-columns', `repeat(${valueInput}, 1fr`);
+    console.log(apagandoPixels.style.setProperty);
+    for (let index2 = 0; index2 < valueInput ** 2; index2 += 1) {
+      const pixels = document.createElement('div');
+      pixels.classList.add('pixel');
+      section3.appendChild(pixels);
     }
   }
-  
+}
 
-  //Crie um input que permita à pessoa usuária preencher um novo tamanho para o quadro de pixels.
-  
-  
-  const addInput = document.createElement('input');
-  addInput.id = 'board-size';
-  addInput.type = 'number';
-  addInput.min =  '1';
-  //addInput.max =  '50';
-  addSection2.appendChild(addInput);
-  const addBtnInput = document.createElement('button');
-  addBtnInput.innerHTML = 'VQV';
-  addBtnInput.id = 'generate-board';
-  addSection2.appendChild(addBtnInput);
+// Crie uma função para manter o tamanho novo do board ao recarregar a página.
+function salvandoTamanhoQuadro() {
+  const quadroTamanho = document.querySelector('#pixel-board');
+  const size = quadroTamanho.style.gridTemplateColumns;
+  localStorage.setItem('boardSize', JSON.stringify(quadroTamanho.innerHTML));
+  localStorage.setItem('size', JSON.stringify(size));
+}
 
-  function quadroNovo(){
-    const valueInput = document.querySelector('#board-size').value;
-    const apagandoPixels = document.getElementById('pixel-board');
-    //console.log(valueInput);
-    //pegar o valor do input e colocar no for para substituir o pixel board.
-    //const mae = document.querySelector('#pixel-board');
-    if (valueInput <= 0) {
-      return alert('Board inválido!');
-    } else if (valueInput > 0 && valueInput < 5) {
-        let valueInput = 5;
-        apagandoPixels.innerHTML = '';
-        apagandoPixels.style.setProperty('grid-template-columns', `repeat(${valueInput}, 1fr`);
-        for (let index2 = 0; index2 < valueInput ** 2; index2 += 1) {
-          const pixels = document.createElement('div');
-          pixels.classList.add('pixel');
-          section3.appendChild(pixels);
-        } 
-    } else if (valueInput > 50) {
-      let valueInput = 50;
-      apagandoPixels.innerHTML = '';
-      apagandoPixels.style.setProperty('grid-template-columns', `repeat(${valueInput}, 1fr`);
-      console.log(apagandoPixels.style.setProperty);
-      for (let index2 = 0; index2 < valueInput ** 2; index2 += 1) {
-        const pixels = document.createElement('div');
-        pixels.classList.add('pixel');
-        section3.appendChild(pixels);
-      }
-     } else {
-        apagandoPixels.innerHTML = '';
-      apagandoPixels.style.setProperty('grid-template-columns', `repeat(${valueInput}, 1fr`);
-      console.log(apagandoPixels.style.setProperty);
-      for (let index2 = 0; index2 < valueInput ** 2; index2 += 1) {
-        const pixels = document.createElement('div');
-        pixels.classList.add('pixel');
-        section3.appendChild(pixels);
-
-      }
-      }
-  }
-
-  // Crie uma função para manter o tamanho novo do board ao recarregar a página.
-  function salvandoTamanhoQuadro(){
-    const valueInput = document.querySelector('#board-size').value;
-    const quadroTamanho = document.querySelector('#pixel-board');
-    const size = quadroTamanho.style.gridTemplateColumns;
-    console.log(size);
-    localStorage.setItem('boardSize', JSON.stringify(quadroTamanho.innerHTML));
-    localStorage.setItem('size', JSON.stringify(size) );
-  }
-
-  function recuperandoTamanhoQuadro(){
-    
-    if (localStorage.getItem('boardSize')) {
+function recuperandoTamanhoQuadro() {
+  if (localStorage.getItem('boardSize')) {
     const propAntigo = JSON.parse(localStorage.getItem('size'));
     const tamanhoAntigo = JSON.parse(localStorage.getItem('boardSize'));
     const quadro = document.querySelector('#pixel-board');
     quadro.innerHTML = tamanhoAntigo;
     quadro.style.setProperty('grid-template-columns', `${propAntigo}`);
     console.log(propAntigo);
-    }
   }
-  
+}
 
-  
 window.onload = () => {
   const btnCores = document.querySelector('#pixel-board');
   btnCores.addEventListener('click', (salvandoCoresPintadas));
